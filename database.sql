@@ -446,8 +446,9 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- ============================================================
 
 -- Admin default (password: Admin123!)
+-- Hash generated with: password_hash('Admin123!', PASSWORD_BCRYPT, ['cost' => 10])
 INSERT INTO `users` (`nama`, `email`, `username`, `password`, `role`, `status`) VALUES
-('Administrator', 'admin@bimbeltemanjuara.com', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ADMIN', 'AKTIF');
+('Administrator', 'admin@bimbeltemanjuara.com', 'admin', '$2y$10$GBI/APvP5N4LW2bSpWrWCuGX5g8aqQBcnkA.CpUTT5lPjB2FqlAJS', 'ADMIN', 'AKTIF');
 
 -- Program default
 INSERT INTO `program` (`nama_program`, `tipe`, `deskripsi`) VALUES
