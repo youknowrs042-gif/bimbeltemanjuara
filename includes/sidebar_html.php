@@ -1,11 +1,11 @@
 <!-- Overlay Mobile -->
-<div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden transition-opacity" onclick="toggleSidebar()"></div>
 
 <!-- Sidebar -->
 <aside id="sidebar" class="sidebar-transition fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transform -translate-x-full lg:translate-x-0 flex flex-col">
     <!-- Logo -->
     <div class="flex items-center gap-3 px-4 py-5 border-b border-gray-200 dark:border-gray-700">
-        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
             <span class="text-white font-bold text-lg">B</span>
         </div>
         <div class="sidebar-text">
@@ -17,7 +17,10 @@
     <!-- Navigation -->
     <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
         <?php foreach ($menus as $menu): ?>
-            <?php $is_active = str_contains($_SERVER['REQUEST_URI'], basename($menu['url'])); ?>
+            <?php 
+            $menu_file = basename($menu['url']);
+            $is_active = ($current_page === $menu_file); 
+            ?>
             <a href="<?= BASE_URL . $menu['url'] ?>" 
                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200
                       <?= $is_active 
@@ -34,14 +37,14 @@
     <!-- User Info Bottom -->
     <div class="border-t border-gray-200 dark:border-gray-700 p-4">
         <div class="flex items-center gap-3">
-            <div class="w-9 h-9 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
-                <span class="text-sm font-bold text-gray-600 dark:text-gray-300">
+            <div class="w-9 h-9 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
+                <span class="text-sm font-bold text-white">
                     <?= strtoupper(substr($_SESSION['user_nama'] ?? 'U', 0, 1)) ?>
                 </span>
             </div>
             <div class="sidebar-text flex-1 min-w-0">
                 <p class="text-sm font-medium text-gray-700 dark:text-gray-200 truncate"><?= e($_SESSION['user_nama'] ?? '') ?></p>
-                <p class="text-xs text-gray-500 dark:text-gray-400"><?= e($_SESSION['user_role'] ?? '') ?></p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 capitalize"><?= e(strtolower(str_replace('_', ' ', $_SESSION['user_role'] ?? ''))) ?></p>
             </div>
             <a href="<?= BASE_URL ?>logout.php" class="sidebar-text text-gray-400 hover:text-red-500 transition-colors" title="Logout">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,6 +99,21 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <!-- Locked Account Warning for Siswa -->
+    <?php if (check_siswa_lock()): ?>
+    <div class="mx-4 mt-4">
+        <div class="p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800 flex items-center gap-3">
+            <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            <div>
+                <p class="font-semibold">Akun Terkunci</p>
+                <p class="text-sm">Silakan bayar paket terlebih dahulu untuk mengakses semua fitur.</p>
+            </div>
         </div>
     </div>
     <?php endif; ?>

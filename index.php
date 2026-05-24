@@ -1,7 +1,7 @@
 <?php
 /**
  * INDEX.PHP - Entry Point
- * Redirect ke login atau dashboard
+ * Redirect ke dashboard jika sudah login, ke login jika belum
  */
 require_once __DIR__ . '/helpers.php';
 
