@@ -244,12 +244,12 @@ async function editOrtu(id) {
 document.getElementById('formOrtu').addEventListener('submit', async function(e){
     e.preventDefault();const btn=document.getElementById('btnSubmit');setButtonLoading(btn,true);
     const fd=new FormData(this);fd.append('action',fd.get('id')?'update':'create');fd.append('csrf_token',CSRF);
-    const res=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res=await fetchAPI(BASE,{method:'POST',body:fd});
     setButtonLoading(btn,false);
     if(res.success){closeModal('modalOrtu');showToast(res.message);loadData();if(res.credentials){document.getElementById('credUsername').textContent=res.credentials.username;document.getElementById('credPassword').textContent=res.credentials.password;setTimeout(()=>openModal('modalCredentials'),300);}}else showToast(res.message,'error');
 });
 
-async function deleteOrtu(id){if(!confirm('Hapus data orang tua ini?'))return;const fd=new FormData();fd.append('action','delete');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
+async function deleteOrtu(id){if(!confirm('Hapus data orang tua ini?'))return;const fd=new FormData();fd.append('action','delete');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
 
 async function showPairing(ortuId, nama) {
     currentPairOrtuId = ortuId;
@@ -273,13 +273,13 @@ async function showPairing(ortuId, nama) {
 async function doPair() {
     const siswaId = document.getElementById('pairSiswaSelect').value;
     const fd = new FormData(); fd.append('action','pair'); fd.append('ortu_id',currentPairOrtuId); fd.append('siswa_id',siswaId); fd.append('csrf_token',CSRF);
-    const r = await fetchAPI(BASE, {method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const r = await fetchAPI(BASE, {method:'POST',body:fd});
     if(r.success){showToast(r.message);showPairing(currentPairOrtuId,document.getElementById('pairOrtuName').textContent);loadData();}else showToast(r.message,'error');
 }
 
 async function doUnpair(ortuId, siswaId) {
     const fd = new FormData(); fd.append('action','unpair'); fd.append('ortu_id',ortuId); fd.append('siswa_id',siswaId); fd.append('csrf_token',CSRF);
-    const r = await fetchAPI(BASE, {method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const r = await fetchAPI(BASE, {method:'POST',body:fd});
     if(r.success){showToast(r.message);showPairing(ortuId,document.getElementById('pairOrtuName').textContent);loadData();}else showToast(r.message,'error');
 }
 

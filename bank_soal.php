@@ -360,13 +360,13 @@ async function editBS(id){
 document.getElementById('formBankSoal').addEventListener('submit', async function(e){
     e.preventDefault();const btn=document.getElementById('btnSubmitBS');setButtonLoading(btn,true);
     const fd=new FormData(this);fd.append('action',fd.get('id')?'update':'create');fd.append('csrf_token',CSRF);
-    const res=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res=await fetchAPI(BASE,{method:'POST',body:fd});
     setButtonLoading(btn,false);
     if(res.success){closeModal('modalBankSoal');showToast(res.message);loadData();}else showToast(res.message,'error');
 });
 
-async function approveBS(id){if(!confirm('Setujui bank soal ini?'))return;const fd=new FormData();fd.append('action','approve');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
-async function deleteBS(id){if(!confirm('Hapus bank soal ini beserta semua soalnya?'))return;const fd=new FormData();fd.append('action','delete');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
+async function approveBS(id){if(!confirm('Setujui bank soal ini?'))return;const fd=new FormData();fd.append('action','approve');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
+async function deleteBS(id){if(!confirm('Hapus bank soal ini beserta semua soalnya?'))return;const fd=new FormData();fd.append('action','delete');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
 
 
 // === SOAL MANAGEMENT ===
@@ -417,7 +417,7 @@ document.getElementById('formSoal').addEventListener('submit', async function(e)
     const editId = fd.get('soal_id');
     fd.append('action', editId ? 'update_soal' : 'add_soal');
     fd.append('csrf_token', CSRF);
-    const res = await fetchAPI(BASE, {method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res = await fetchAPI(BASE, {method:'POST',body:fd});
     if (res.success) {
         showToast(res.message);
         const bankId = document.getElementById('soal_bank_id').value;
@@ -450,7 +450,7 @@ async function editSoal(id) {
 async function deleteSoal(id, bankId) {
     if (!confirm('Hapus soal ini?')) return;
     const fd = new FormData(); fd.append('action','delete_soal'); fd.append('soal_id',id); fd.append('csrf_token',CSRF);
-    const res = await fetchAPI(BASE, {method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res = await fetchAPI(BASE, {method:'POST',body:fd});
     if (res.success) { showToast(res.message); loadSoalList(bankId); loadData(); } else showToast(res.message,'error');
 }
 

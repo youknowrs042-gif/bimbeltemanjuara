@@ -163,7 +163,7 @@ async function showCreateModal(){
 document.getElementById('formPresensi').addEventListener('submit', async function(e){
     e.preventDefault();const btn=document.getElementById('btnSubmit');setButtonLoading(btn,true);
     const fd=new FormData(this);fd.append('action','create');fd.append('csrf_token',CSRF);
-    const res=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res=await fetchAPI(BASE,{method:'POST',body:fd});
     setButtonLoading(btn,false);
     if(res.success){closeModal('modalPresensi');showToast(res.message);loadData();}else showToast(res.message,'error');
 });

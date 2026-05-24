@@ -220,7 +220,7 @@ async function showCreateModal(){
 document.getElementById('formPR').addEventListener('submit', async function(e){
     e.preventDefault();const btn=document.getElementById('btnSubmitPR');setButtonLoading(btn,true);
     const fd=new FormData(this);fd.append('action','create');fd.append('csrf_token',CSRF);
-    const res=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res=await fetchAPI(BASE,{method:'POST',body:fd});
     setButtonLoading(btn,false);
     if(res.success){closeModal('modalPR');showToast(res.message);loadData();}else showToast(res.message,'error');
 });
@@ -240,7 +240,7 @@ async function showResults(prId){
     }
 }
 
-async function deletePR(id){if(!confirm('Hapus PR ini?'))return;const fd=new FormData();fd.append('action','delete');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
+async function deletePR(id){if(!confirm('Hapus PR ini?'))return;const fd=new FormData();fd.append('action','delete');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
 function esc(s){if(!s)return '';const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 </script>
 

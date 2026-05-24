@@ -250,12 +250,12 @@ function showUpload(id){document.getElementById('bukti_id').value=id;document.ge
 document.getElementById('formBukti').addEventListener('submit', async function(e){
     e.preventDefault();
     const fd=new FormData(this); fd.append('action','upload_bukti'); fd.append('csrf_token',CSRF);
-    const res=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res=await fetchAPI(BASE,{method:'POST',body:fd});
     if(res.success){closeModal('modalBukti');showToast(res.message);loadData();}else showToast(res.message,'error');
 });
 
-async function confirmPayment(id){if(!confirm('Konfirmasi pembayaran ini? Akun siswa akan diaktifkan.'))return;const fd=new FormData();fd.append('action','confirm');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
-async function rejectPayment(id){if(!confirm('Tolak bukti bayar ini?'))return;const fd=new FormData();fd.append('action','reject');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
+async function confirmPayment(id){if(!confirm('Konfirmasi pembayaran ini? Akun siswa akan diaktifkan.'))return;const fd=new FormData();fd.append('action','confirm');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
+async function rejectPayment(id){if(!confirm('Tolak bukti bayar ini?'))return;const fd=new FormData();fd.append('action','reject');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
 
 async function showDetail(id){
     const res=await fetchAPI(`${BASE}?action=get&id=${id}`);

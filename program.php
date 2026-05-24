@@ -304,23 +304,23 @@ function showHargaForm() { document.getElementById('formHarga').reset(); openMod
 
 document.getElementById('formProgram').addEventListener('submit', async function(e) {
     e.preventDefault(); const fd = new FormData(this); fd.append('action','save_program'); fd.append('csrf_token',CSRF);
-    const res = await fetchAPI(BASE, {method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res = await fetchAPI(BASE, {method:'POST',body:fd});
     if(res.success){closeModal('modalProgram');showToast(res.message);loadPrograms();}else showToast(res.message,'error');
 });
 document.getElementById('formPaket').addEventListener('submit', async function(e) {
     e.preventDefault(); const fd = new FormData(this); fd.append('action','save_paket'); fd.append('csrf_token',CSRF);
-    const res = await fetchAPI(BASE, {method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res = await fetchAPI(BASE, {method:'POST',body:fd});
     if(res.success){closeModal('modalPaket');showToast(res.message);loadPakets();}else showToast(res.message,'error');
 });
 document.getElementById('formHarga').addEventListener('submit', async function(e) {
     e.preventDefault(); const fd = new FormData(this); fd.append('action','save_harga'); fd.append('csrf_token',CSRF);
-    const res = await fetchAPI(BASE, {method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res = await fetchAPI(BASE, {method:'POST',body:fd});
     if(res.success){closeModal('modalHarga');showToast(res.message);loadHarga();}else showToast(res.message,'error');
 });
 
-async function deleteProgram(id) { if(!confirm('Hapus program ini?'))return; const fd=new FormData();fd.append('action','delete_program');fd.append('id',id);fd.append('csrf_token',CSRF); const r=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}}); if(r.success){showToast(r.message);loadPrograms();}else showToast(r.message,'error'); }
-async function deletePaket(id) { if(!confirm('Hapus paket ini?'))return; const fd=new FormData();fd.append('action','delete_paket');fd.append('id',id);fd.append('csrf_token',CSRF); const r=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}}); if(r.success){showToast(r.message);loadPakets();}else showToast(r.message,'error'); }
-async function deleteHarga(id) { if(!confirm('Hapus harga ini?'))return; const fd=new FormData();fd.append('action','delete_harga');fd.append('id',id);fd.append('csrf_token',CSRF); const r=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}}); if(r.success){showToast(r.message);loadHarga();}else showToast(r.message,'error'); }
+async function deleteProgram(id) { if(!confirm('Hapus program ini?'))return; const fd=new FormData();fd.append('action','delete_program');fd.append('id',id);fd.append('csrf_token',CSRF); const r=await fetchAPI(BASE,{method:'POST',body:fd}); if(r.success){showToast(r.message);loadPrograms();}else showToast(r.message,'error'); }
+async function deletePaket(id) { if(!confirm('Hapus paket ini?'))return; const fd=new FormData();fd.append('action','delete_paket');fd.append('id',id);fd.append('csrf_token',CSRF); const r=await fetchAPI(BASE,{method:'POST',body:fd}); if(r.success){showToast(r.message);loadPakets();}else showToast(r.message,'error'); }
+async function deleteHarga(id) { if(!confirm('Hapus harga ini?'))return; const fd=new FormData();fd.append('action','delete_harga');fd.append('id',id);fd.append('csrf_token',CSRF); const r=await fetchAPI(BASE,{method:'POST',body:fd}); if(r.success){showToast(r.message);loadHarga();}else showToast(r.message,'error'); }
 
 function esc(s){if(!s)return '';const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 </script>
