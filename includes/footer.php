@@ -170,25 +170,44 @@ function closeModal(modalId) {
 // AJAX HELPER
 // ============================================================
 async function fetchAPI(url, options = {}) {
-    const defaults = {
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': '<?= csrf_token() ?>'
-        }
+    const config = {
+        method: options.method || 'GET',
+        credentials: 'same-origin'
     };
     
-    if (options.body && !(options.body instanceof FormData)) {
-        defaults.headers['Content-Type'] = 'application/json';
-        options.body = JSON.stringify(options.body);
+    if (options.body instanceof FormData) {
+        // FormData: jangan set Content-Type (biar browser auto-set multipart/form-data)
+        config.body = options.body;
+        config.headers = {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': '<?= csrf_token() ?>'
+        };
+    } else if (options.body && typeof options.body === 'object') {
+        // JSON object
+        config.body = JSON.stringify(options.body);
+        config.headers = {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': '<?= csrf_token() ?>'
+        };
+    } else {
+        // GET request atau no body
+        config.headers = {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': '<?= csrf_token() ?>'
+        };
     }
-    
-    const config = {...defaults, ...options};
-    config.headers = {...defaults.headers, ...(options.headers || {})};
     
     try {
         const response = await fetch(url, config);
-        const data = await response.json();
-        return data;
+        const text = await response.text();
+        try {
+            return JSON.parse(text);
+        } catch(e) {
+            console.error('JSON Parse Error:', text.substring(0, 500));
+            showToast('Server error. Cek console.', 'error');
+            return { success: false, message: 'Invalid server response' };
+        }
     } catch (error) {
         console.error('API Error:', error);
         showToast('Terjadi kesalahan jaringan', 'error');

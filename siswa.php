@@ -451,7 +451,7 @@ document.getElementById('formSiswa').addEventListener('submit', async function(e
     formData.append('action', id ? 'update' : 'create');
     formData.append('csrf_token', '<?= csrf_token() ?>');
     
-    const res = await fetchAPI('<?= BASE_URL ?>siswa.php', { method: 'POST', body: formData, headers: {'X-Requested-With': 'XMLHttpRequest'} });
+    const res = await fetchAPI('<?= BASE_URL ?>siswa.php', { method: 'POST', body: formData });
     
     setButtonLoading(btn, false);
     
@@ -478,7 +478,7 @@ async function deleteSiswa(id) {
     formData.append('id', id);
     formData.append('csrf_token', '<?= csrf_token() ?>');
     
-    const res = await fetchAPI('<?= BASE_URL ?>siswa.php', { method: 'POST', body: formData, headers: {'X-Requested-With': 'XMLHttpRequest'} });
+    const res = await fetchAPI('<?= BASE_URL ?>siswa.php', { method: 'POST', body: formData });
     if (res.success) { showToast(res.message, 'success'); loadData(); }
     else showToast(res.message, 'error');
 }
@@ -490,7 +490,7 @@ async function resetPassword(id) {
     formData.append('id', id);
     formData.append('csrf_token', '<?= csrf_token() ?>');
     
-    const res = await fetchAPI('<?= BASE_URL ?>siswa.php', { method: 'POST', body: formData, headers: {'X-Requested-With': 'XMLHttpRequest'} });
+    const res = await fetchAPI('<?= BASE_URL ?>siswa.php', { method: 'POST', body: formData });
     if (res.success) {
         document.getElementById('credUsername').textContent = 'Password baru:';
         document.getElementById('credPassword').textContent = res.password;

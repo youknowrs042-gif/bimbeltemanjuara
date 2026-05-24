@@ -238,7 +238,7 @@ async function loadList(){
 
 async function startTryout(tryoutId){
     const fd=new FormData();fd.append('action','start');fd.append('tryout_id',tryoutId);fd.append('csrf_token',CSRF);
-    const res=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res=await fetchAPI(BASE,{method:'POST',body:fd});
     if(res.success){
         currentAttemptId=res.attempt_id;
         await loadExam(res.attempt_id);
@@ -320,7 +320,7 @@ async function saveAnswer(soalId, jawaban, index){
     fd.append('soal_id',soalId);
     fd.append('jawaban',jawaban);
     fd.append('csrf_token',CSRF);
-    fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    fetchAPI(BASE,{method:'POST',body:fd});
 }
 
 async function finishExam(){
@@ -331,7 +331,7 @@ async function finishExam(){
     fd.append('action','finish');
     fd.append('attempt_id',currentAttemptId);
     fd.append('csrf_token',CSRF);
-    const res=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res=await fetchAPI(BASE,{method:'POST',body:fd});
     
     if(res.success){
         document.getElementById('resultNilai').textContent=res.nilai;

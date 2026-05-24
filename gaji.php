@@ -174,13 +174,13 @@ async function generateGaji() {
     const tahun=document.getElementById('selTahun').value;
     if(!confirm(`Generate gaji bulan ${bulan}/${tahun}?`)) return;
     const fd=new FormData();fd.append('action','generate');fd.append('bulan',bulan);fd.append('tahun',tahun);fd.append('csrf_token',CSRF);
-    const res=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res=await fetchAPI(BASE,{method:'POST',body:fd});
     if(res.success){showToast(res.message);loadData();}else showToast(res.message,'error');
 }
 
 async function updateGajiStatus(id,status) {
     const fd=new FormData();fd.append('action','update_status');fd.append('id',id);fd.append('status',status);fd.append('csrf_token',CSRF);
-    const res=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res=await fetchAPI(BASE,{method:'POST',body:fd});
     if(res.success){showToast(res.message);loadData();}else showToast(res.message,'error');
 }
 

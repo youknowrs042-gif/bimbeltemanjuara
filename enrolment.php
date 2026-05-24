@@ -354,7 +354,7 @@ document.getElementById('formEnrol').addEventListener('submit', async function(e
     const fd = new FormData(this);
     fd.append('action', 'create');
     fd.append('csrf_token', CSRF);
-    const res = await fetchAPI(BASE, {method:'POST', body:fd, headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res = await fetchAPI(BASE, {method:'POST', body:fd});
     setButtonLoading(btn, false);
     if (res.success) { closeModal('modalEnrol'); showToast(res.message); loadData(); }
     else showToast(res.message, 'error');
@@ -363,14 +363,14 @@ document.getElementById('formEnrol').addEventListener('submit', async function(e
 async function updateStatus(id, status) {
     if (!confirm(`Ubah status menjadi ${status}?`)) return;
     const fd = new FormData(); fd.append('action','update_status'); fd.append('id',id); fd.append('status',status); fd.append('csrf_token',CSRF);
-    const res = await fetchAPI(BASE, {method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res = await fetchAPI(BASE, {method:'POST',body:fd});
     if (res.success) { showToast(res.message); loadData(); } else showToast(res.message,'error');
 }
 
 async function deleteEnrol(id) {
     if (!confirm('Hapus enrolment ini?')) return;
     const fd = new FormData(); fd.append('action','delete'); fd.append('id',id); fd.append('csrf_token',CSRF);
-    const res = await fetchAPI(BASE, {method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res = await fetchAPI(BASE, {method:'POST',body:fd});
     if (res.success) { showToast(res.message); loadData(); } else showToast(res.message,'error');
 }
 

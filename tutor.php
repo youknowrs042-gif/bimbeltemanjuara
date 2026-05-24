@@ -294,7 +294,7 @@ document.getElementById('formTutor').addEventListener('submit', async function(e
     const fd = new FormData(this);
     fd.append('action', fd.get('id') ? 'update' : 'create');
     fd.append('csrf_token', '<?= csrf_token() ?>');
-    const res = await fetchAPI('<?= BASE_URL ?>tutor.php', {method:'POST', body:fd, headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res = await fetchAPI('<?= BASE_URL ?>tutor.php', {method:'POST', body:fd});
     setButtonLoading(btn, false);
     if (res.success) {
         closeModal('modalTutor'); showToast(res.message,'success'); loadData();
@@ -305,7 +305,7 @@ document.getElementById('formTutor').addEventListener('submit', async function(e
 async function deleteTutor(id) {
     if (!confirm('Yakin hapus tutor ini?')) return;
     const fd = new FormData(); fd.append('action','delete'); fd.append('id',id); fd.append('csrf_token','<?= csrf_token() ?>');
-    const res = await fetchAPI('<?= BASE_URL ?>tutor.php', {method:'POST', body:fd, headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res = await fetchAPI('<?= BASE_URL ?>tutor.php', {method:'POST', body:fd});
     if (res.success) { showToast(res.message,'success'); loadData(); } else showToast(res.message,'error');
 }
 
