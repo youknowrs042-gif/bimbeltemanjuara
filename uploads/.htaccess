@@ -1,0 +1,11 @@
+# Prevent PHP execution in uploads directory
+<FilesMatch "\.php$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Prevent access to backup folder
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^backup/ - [F,L]
+</IfModule>

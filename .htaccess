@@ -1,0 +1,65 @@
+# ============================================================
+# .htaccess - Bimbel Teman Juara
+# Security & Configuration
+# ============================================================
+
+# Disable directory listing
+Options -Indexes
+
+# Follow symbolic links
+Options +FollowSymLinks
+
+# Set default charset
+AddDefaultCharset UTF-8
+
+# PHP Settings
+<IfModule mod_php.c>
+    php_value upload_max_filesize 500M
+    php_value post_max_size 500M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+    php_value memory_limit 256M
+    php_flag display_errors Off
+    php_flag log_errors On
+</IfModule>
+
+# Protect sensitive files
+<FilesMatch "\.(sql|log|ini|env|bak|config)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protect config and helpers
+<Files "config.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "helpers.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Protect includes directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^includes/ - [F,L]
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# Prevent access to backup directory
+<IfModule mod_rewrite.c>
+    RewriteRule ^uploads/backup/ - [F,L]
+</IfModule>
+
+# Error pages
+ErrorDocument 403 /login.php
+ErrorDocument 404 /login.php
