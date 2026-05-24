@@ -195,7 +195,7 @@ document.getElementById('formKerjakan').addEventListener('submit', async functio
     fd.append('action','submit');
     fd.append('assignment_id',document.getElementById('work_assignment_id').value);
     fd.append('csrf_token',CSRF);
-    const res=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res=await fetchAPI(BASE,{method:'POST',body:fd});
     setButtonLoading(btn,false);
     if(res.success){
         const pct=res.nilai;

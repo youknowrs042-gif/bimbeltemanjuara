@@ -142,8 +142,11 @@ function csrf_check(): void
 {
     $token = $_POST['csrf_token'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? '');
     if (!verify_csrf($token)) {
-        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
-            json_response(['success' => false, 'message' => 'Token keamanan tidak valid.'], 403);
+        // Log for debugging
+        error_log("CSRF FAILED - POST token: " . ($_POST['csrf_token'] ?? 'EMPTY') . " | Header token: " . ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? 'EMPTY') . " | Session token: " . ($_SESSION['csrf_token'] ?? 'EMPTY'));
+        
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+            json_response(['success' => false, 'message' => 'Token keamanan tidak valid. Muat ulang halaman.'], 403);
         }
         set_flash('error', 'Token keamanan tidak valid. Silakan coba lagi.');
         redirect($_SERVER['HTTP_REFERER'] ?? 'dashboard.php');
@@ -294,8 +297,38 @@ function db_fetch_all(string $sql, array $params = [], string $types = ''): arra
 function db_insert(string $sql, array $params = [], string $types = ''): int
 {
     global $conn;
-    db_query($sql, $params, $types);
-    return (int)mysqli_insert_id($conn);
+    
+    if (empty($params)) {
+        $result = mysqli_query($conn, $sql);
+        if ($result === false) {
+            error_log("DB Insert Error: " . mysqli_error($conn) . " | SQL: $sql");
+            return 0;
+        }
+        return (int)mysqli_insert_id($conn);
+    }
+    
+    $stmt = mysqli_prepare($conn, $sql);
+    if (!$stmt) {
+        error_log("DB Insert Prepare Error: " . mysqli_error($conn) . " | SQL: $sql");
+        return 0;
+    }
+    
+    if (empty($types)) {
+        $types = str_repeat('s', count($params));
+    }
+    
+    mysqli_stmt_bind_param($stmt, $types, ...$params);
+    $executed = mysqli_stmt_execute($stmt);
+    
+    if (!$executed) {
+        error_log("DB Insert Execute Error: " . mysqli_stmt_error($stmt) . " | SQL: $sql");
+        mysqli_stmt_close($stmt);
+        return 0;
+    }
+    
+    $id = (int)mysqli_insert_id($conn);
+    mysqli_stmt_close($stmt);
+    return $id;
 }
 
 /**

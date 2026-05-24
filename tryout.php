@@ -218,7 +218,7 @@ async function showCreateModal(){
 document.getElementById('formTryout').addEventListener('submit', async function(e){
     e.preventDefault();const btn=document.getElementById('btnSubmit');setButtonLoading(btn,true);
     const fd=new FormData(this);fd.append('action','create');fd.append('csrf_token',CSRF);
-    const res=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});
+    const res=await fetchAPI(BASE,{method:'POST',body:fd});
     setButtonLoading(btn,false);
     if(res.success){closeModal('modalTryout');showToast(res.message);loadData();}else showToast(res.message,'error');
 });
@@ -236,8 +236,8 @@ async function showAttempts(id){
     }
 }
 
-async function allowRetry(attemptId){const fd=new FormData();fd.append('action','allow_retry');fd.append('attempt_id',attemptId);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});if(r.success)showToast(r.message);else showToast(r.message,'error');}
-async function deleteTryout(id){if(!confirm('Hapus tryout ini?'))return;const fd=new FormData();fd.append('action','delete');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
+async function allowRetry(attemptId){const fd=new FormData();fd.append('action','allow_retry');fd.append('attempt_id',attemptId);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd});if(r.success)showToast(r.message);else showToast(r.message,'error');}
+async function deleteTryout(id){if(!confirm('Hapus tryout ini?'))return;const fd=new FormData();fd.append('action','delete');fd.append('id',id);fd.append('csrf_token',CSRF);const r=await fetchAPI(BASE,{method:'POST',body:fd});if(r.success){showToast(r.message);loadData();}else showToast(r.message,'error');}
 function esc(s){if(!s)return '';const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 </script>
 
