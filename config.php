@@ -8,6 +8,9 @@
 
 // Mulai session
 if (session_status() === PHP_SESSION_NONE) {
+    ini_set('session.cookie_httponly', 1);
+    ini_set('session.cookie_secure', 1);
+    ini_set('session.use_strict_mode', 1);
     session_start();
 }
 
@@ -16,15 +19,15 @@ if (session_status() === PHP_SESSION_NONE) {
 // ============================================================
 define('APP_NAME', 'Bimbel Teman Juara');
 define('APP_VERSION', '1.0.0');
-define('BASE_URL', 'https://app.bimbeltemanjuara.com/');
+define('BASE_URL', 'https://lms.bimbeltemanjuara.com/');
 
 // ============================================================
 // KONFIGURASI DATABASE
 // ============================================================
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'bimbelt1_app');
-define('DB_USER', 'bimbelt1_appuser');
-define('DB_PASS', 'Sadasa123!');
+define('DB_NAME', 'bimbelt1_lmsmei');
+define('DB_USER', 'bimbelt1_lmsmeiuser');
+define('DB_PASS', 'uXUf0pX3rtNxmXJT');
 define('DB_CHARSET', 'utf8mb4');
 
 // ============================================================
@@ -41,6 +44,11 @@ define('MAIL_PORT', 465);
 define('MAIL_USERNAME', 'noreply@bimbeltemanjuara.com');
 define('MAIL_PASSWORD', '');
 define('MAIL_FROM_NAME', 'Bimbel Teman Juara');
+
+// ============================================================
+// KONFIGURASI BACKUP
+// ============================================================
+define('BACKUP_DIR', __DIR__ . '/uploads/backup/');
 
 // ============================================================
 // KONEKSI DATABASE (MySQLi)

@@ -1,6 +1,6 @@
 <?php
 /**
- * SIDEBAR.PHP - Navigasi Sidebar
+ * SIDEBAR.PHP - Navigasi Sidebar berdasarkan Role
  */
 $role = current_role();
 
@@ -10,44 +10,45 @@ $menus = [];
 if ($role === 'ADMIN') {
     $menus = [
         ['icon' => 'dashboard', 'label' => 'Dashboard', 'url' => 'dashboard.php'],
-        ['icon' => 'people', 'label' => 'Siswa', 'url' => 'pages/admin/siswa.php'],
-        ['icon' => 'family', 'label' => 'Orang Tua', 'url' => 'pages/admin/ortu.php'],
-        ['icon' => 'school', 'label' => 'Tutor', 'url' => 'pages/admin/tutor.php'],
-        ['icon' => 'package', 'label' => 'Program & Paket', 'url' => 'pages/admin/program.php'],
-        ['icon' => 'enroll', 'label' => 'Enrolment', 'url' => 'pages/admin/enrolment.php'],
-        ['icon' => 'payment', 'label' => 'Pembayaran', 'url' => 'pages/admin/pembayaran.php'],
-        ['icon' => 'presence', 'label' => 'Presensi', 'url' => 'pages/admin/presensi.php'],
-        ['icon' => 'salary', 'label' => 'Gaji Tutor', 'url' => 'pages/admin/gaji.php'],
-        ['icon' => 'book', 'label' => 'Bank Soal', 'url' => 'pages/admin/bank_soal.php'],
-        ['icon' => 'quiz', 'label' => 'PR / Kuis', 'url' => 'pages/admin/pr.php'],
-        ['icon' => 'exam', 'label' => 'Try Out', 'url' => 'pages/admin/tryout.php'],
-        ['icon' => 'report', 'label' => 'Laporan', 'url' => 'pages/admin/laporan.php'],
-        ['icon' => 'log', 'label' => 'Log Aktivitas', 'url' => 'pages/admin/log.php'],
+        ['icon' => 'people', 'label' => 'Siswa', 'url' => 'siswa.php'],
+        ['icon' => 'family', 'label' => 'Orang Tua', 'url' => 'ortu.php'],
+        ['icon' => 'school', 'label' => 'Tutor', 'url' => 'tutor.php'],
+        ['icon' => 'package', 'label' => 'Program & Paket', 'url' => 'program.php'],
+        ['icon' => 'enroll', 'label' => 'Enrolment', 'url' => 'enrolment.php'],
+        ['icon' => 'payment', 'label' => 'Pembayaran', 'url' => 'pembayaran.php'],
+        ['icon' => 'presence', 'label' => 'Presensi', 'url' => 'presensi.php'],
+        ['icon' => 'salary', 'label' => 'Gaji Tutor', 'url' => 'gaji.php'],
+        ['icon' => 'book', 'label' => 'Bank Soal', 'url' => 'bank_soal.php'],
+        ['icon' => 'quiz', 'label' => 'PR / Kuis', 'url' => 'pr.php'],
+        ['icon' => 'exam', 'label' => 'Try Out', 'url' => 'tryout.php'],
+        ['icon' => 'report', 'label' => 'Laporan', 'url' => 'laporan.php'],
+        ['icon' => 'log', 'label' => 'Log Aktivitas', 'url' => 'log.php'],
     ];
 } elseif ($role === 'TUTOR') {
     $menus = [
         ['icon' => 'dashboard', 'label' => 'Dashboard', 'url' => 'dashboard.php'],
-        ['icon' => 'people', 'label' => 'Siswa Saya', 'url' => 'pages/tutor/siswa.php'],
-        ['icon' => 'presence', 'label' => 'Presensi', 'url' => 'pages/tutor/presensi.php'],
-        ['icon' => 'book', 'label' => 'Bank Soal', 'url' => 'pages/tutor/bank_soal.php'],
-        ['icon' => 'quiz', 'label' => 'PR / Kuis', 'url' => 'pages/tutor/pr.php'],
-        ['icon' => 'exam', 'label' => 'Try Out', 'url' => 'pages/tutor/tryout.php'],
+        ['icon' => 'people', 'label' => 'Siswa Saya', 'url' => 'tutor_siswa.php'],
+        ['icon' => 'presence', 'label' => 'Presensi', 'url' => 'tutor_presensi.php'],
+        ['icon' => 'book', 'label' => 'Bank Soal', 'url' => 'tutor_bank_soal.php'],
+        ['icon' => 'quiz', 'label' => 'PR / Kuis', 'url' => 'tutor_pr.php'],
+        ['icon' => 'exam', 'label' => 'Try Out', 'url' => 'tutor_tryout.php'],
+        ['icon' => 'report', 'label' => 'Perkembangan', 'url' => 'tutor_perkembangan.php'],
     ];
 } elseif ($role === 'SISWA') {
     $menus = [
         ['icon' => 'dashboard', 'label' => 'Dashboard', 'url' => 'dashboard.php'],
-        ['icon' => 'presence', 'label' => 'Presensi Saya', 'url' => 'pages/siswa/presensi.php'],
-        ['icon' => 'book', 'label' => 'Materi', 'url' => 'pages/siswa/materi.php'],
-        ['icon' => 'quiz', 'label' => 'PR / Kuis', 'url' => 'pages/siswa/pr.php'],
-        ['icon' => 'exam', 'label' => 'Try Out', 'url' => 'pages/siswa/tryout.php'],
-        ['icon' => 'report', 'label' => 'Perkembangan', 'url' => 'pages/siswa/perkembangan.php'],
+        ['icon' => 'presence', 'label' => 'Presensi Saya', 'url' => 'siswa_presensi.php'],
+        ['icon' => 'book', 'label' => 'Materi', 'url' => 'siswa_materi.php'],
+        ['icon' => 'quiz', 'label' => 'PR / Kuis', 'url' => 'siswa_pr.php'],
+        ['icon' => 'exam', 'label' => 'Try Out', 'url' => 'siswa_tryout.php'],
+        ['icon' => 'report', 'label' => 'Perkembangan', 'url' => 'siswa_perkembangan.php'],
     ];
 } elseif ($role === 'ORANG_TUA') {
     $menus = [
         ['icon' => 'dashboard', 'label' => 'Dashboard', 'url' => 'dashboard.php'],
-        ['icon' => 'people', 'label' => 'Data Anak', 'url' => 'pages/ortu/anak.php'],
-        ['icon' => 'report', 'label' => 'Perkembangan', 'url' => 'pages/ortu/perkembangan.php'],
-        ['icon' => 'payment', 'label' => 'Pembayaran', 'url' => 'pages/ortu/pembayaran.php'],
+        ['icon' => 'people', 'label' => 'Data Anak', 'url' => 'ortu_anak.php'],
+        ['icon' => 'report', 'label' => 'Perkembangan', 'url' => 'ortu_perkembangan.php'],
+        ['icon' => 'payment', 'label' => 'Pembayaran', 'url' => 'ortu_pembayaran.php'],
     ];
 }
 
